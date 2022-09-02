@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  debian:
+    image: sonohara/samba4-ad-dc
+    restart: always
+    privileged: true
+    environment:
+      - DOCKER_DEBUG=1
+      - DNS_FORWARD_1=8.8.8.8
+      - DNS_DOMAIN=sambaad.top
+      - AD_PASSWORD=123456!!qwerty
+      - AD_REALM=sambaad.top
+      - AD_DOMAIN=SAMBAAD
+    ports:
+      - 389:389
+      - 636:636
+    #volumes:
+      #- ./debian/etc/samba:/etc/samba
+      #- ./debian/var/lib/samba:/var/lib/samba
+    networks:
+      - sambatest
+
+networks:
+  sambatest:
+    external: true
